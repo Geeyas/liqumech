@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>731764880289-vnbb2oij4avikjhn8sadsrs7qirnkcoq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.731764880289-vnbb2oij4avikjhn8sadsrs7qirnkcoq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>731764880289-0puqrt9s2s149nrgaq1muvpng8eg53bj.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDWLmbSzt_2h_p37CDfOHjV95lyolYX6-s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>731764880289</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.liquimech.liquimechcloud</string>
+	<key>PROJECT_ID</key>
+	<string>liquimechcloudlogin</string>
+	<key>STORAGE_BUCKET</key>
+	<string>liquimechcloudlogin.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:731764880289:ios:45d38d27212bbd73be11e0</string>
+</dict>
+</plist>

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "731764880289",
+    "project_id": "liquimechcloudlogin",
+    "storage_bucket": "liquimechcloudlogin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731764880289:android:4a05604efee7544cbe11e0",
+        "android_client_info": {
+          "package_name": "com.liquimech.liquimechcloud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731764880289-0puqrt9s2s149nrgaq1muvpng8eg53bj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liquimech.liquimechcloud",
+            "certificate_hash": "584ac2ae3b320bca65ed02e92f59e9f3d64d11eb"
+          }
+        },
+        {
+          "client_id": "731764880289-dik62a7tur8dprsdvhck3l6tudo9k7at.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liquimech.liquimechcloud",
+            "certificate_hash": "dbe73bb741bbfb0f73223b13c33b28b5c70ea87b"
+          }
+        },
+        {
+          "client_id": "731764880289-ekcqvl6bep2mur72egke824r4s672l1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liquimech.liquimechcloud",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "731764880289-fu5crtbcoluo8qatrb6qh6277o61rofm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCgwVCse09bJg6g4Ij7dPnwSvJn151rO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731764880289-fu5crtbcoluo8qatrb6qh6277o61rofm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "731764880289-vnbb2oij4avikjhn8sadsrs7qirnkcoq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.liquimech.liquimechcloud"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
