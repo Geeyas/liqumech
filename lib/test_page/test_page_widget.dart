@@ -64,106 +64,95 @@ class _TestPageWidgetState extends State<TestPageWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: FutureBuilder<ApiCallResponse>(
-                  future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                        ..complete(ArduinoIoTCloudGroup.callThingsCall.call(
-                          authToken: FFAppState().MyUserToken,
-                        )))
-                      .future,
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-                    final gridViewCallThingsResponse = snapshot.data!;
-                    return Builder(
-                      builder: (context) {
-                        final thingsGrid = getJsonField(
-                          gridViewCallThingsResponse.jsonBody,
-                          r'''$''',
-                        ).toList();
-                        return RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() => _apiRequestCompleter = null);
-                            await waitForApiRequestCompleter();
-                          },
-                          child: GridView.builder(
-                            padding: EdgeInsets.zero,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: 1,
+          child: FutureBuilder<ApiCallResponse>(
+            future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
+                  ..complete(ArduinoIoTCloudGroup.callThingsCall.call(
+                    authToken: FFAppState().MyUserToken,
+                  )))
+                .future,
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
+                  ),
+                );
+              }
+              final gridViewCallThingsResponse = snapshot.data!;
+              return Builder(
+                builder: (context) {
+                  final thingsGrid = getJsonField(
+                    gridViewCallThingsResponse.jsonBody,
+                    r'''$''',
+                  ).toList();
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      setState(() => _apiRequestCompleter = null);
+                      await waitForApiRequestCompleter();
+                    },
+                    child: GridView.builder(
+                      padding: EdgeInsets.zero,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 1,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      itemCount: thingsGrid.length,
+                      itemBuilder: (context, thingsGridIndex) {
+                        final thingsGridItem = thingsGrid[thingsGridIndex];
+                        return Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Color(0x33000000),
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            scrollDirection: Axis.vertical,
-                            itemCount: thingsGrid.length,
-                            itemBuilder: (context, thingsGridIndex) {
-                              final thingsGridItem =
-                                  thingsGrid[thingsGridIndex];
-                              return Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 5,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16, 16, 16, 16),
-                                        child: Icon(
-                                          Icons.settings_outlined,
-                                          color: Colors.black,
-                                          size: 70,
-                                        ),
-                                      ),
-                                      Text(
-                                        getJsonField(
-                                          thingsGridItem,
-                                          r'''$.name''',
-                                        ).toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
-                                      ),
-                                    ],
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 16, 16, 16),
+                                  child: Icon(
+                                    Icons.settings_outlined,
+                                    color: Colors.black,
+                                    size: 70,
                                   ),
                                 ),
-                              );
-                            },
+                                Text(
+                                  getJsonField(
+                                    thingsGridItem,
+                                    r'''$.name''',
+                                  ).toString(),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
-                    );
-                  },
-                ),
-              ),
-            ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
