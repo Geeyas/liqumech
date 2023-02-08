@@ -64,158 +64,144 @@ class _MyThingsWidgetState extends State<MyThingsWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                FutureBuilder<ApiCallResponse>(
-                  future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                        ..complete(ArduinoIoTCloudGroup.callThingsCall.call(
-                          authToken: FFAppState().MyUserToken,
-                        )))
-                      .future,
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: Padding(
+          child: FutureBuilder<ApiCallResponse>(
+            future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
+                  ..complete(ArduinoIoTCloudGroup.callThingsCall.call(
+                    authToken: FFAppState().MyUserToken,
+                  )))
+                .future,
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                    child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                );
+              }
+              final listViewCallThingsResponse = snapshot.data!;
+              return Builder(
+                builder: (context) {
+                  final thingsList = getJsonField(
+                    listViewCallThingsResponse.jsonBody,
+                    r'''$''',
+                  ).toList();
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      setState(() => _apiRequestCompleter = null);
+                      await waitForApiRequestCompleter();
+                    },
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: thingsList.length,
+                      itemBuilder: (context, thingsListIndex) {
+                        final thingsListItem = thingsList[thingsListIndex];
+                        return Padding(
                           padding:
                               EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: CircularProgressIndicator(
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                          child: Container(
+                            width: double.infinity,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Color(0x4D000000),
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          ),
-                        ),
-                      );
-                    }
-                    final listViewCallThingsResponse = snapshot.data!;
-                    return Builder(
-                      builder: (context) {
-                        final thingsList = getJsonField(
-                          listViewCallThingsResponse.jsonBody,
-                          r'''$''',
-                        ).toList();
-                        return RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() => _apiRequestCompleter = null);
-                            await waitForApiRequestCompleter();
-                          },
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: thingsList.length,
-                            itemBuilder: (context, thingsListIndex) {
-                              final thingsListItem =
-                                  thingsList[thingsListIndex];
-                              return Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 16, 16, 16),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 5,
-                                        color: Color(0x4D000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 8, 8),
-                                        child: Icon(
-                                          Icons.now_widgets_outlined,
-                                          color: Colors.black,
-                                          size: 70,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 8, 0, 8),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                getJsonField(
-                                                  thingsListItem,
-                                                  r'''$.name''',
-                                                ).toString(),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 18,
-                                                        ),
-                                              ),
-                                              Text(
-                                                'Description',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 12,
-                                                        ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 8, 8),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            FFAppState().MyThingName =
-                                                getJsonField(
-                                              thingsListItem,
-                                              r'''$.name''',
-                                            ).toString();
-                                            FFAppState().MyThingID =
-                                                getJsonField(
-                                              thingsListItem,
-                                              r'''$.id''',
-                                            ).toString();
-
-                                            context.pushNamed('ThingName');
-                                          },
-                                          child: Icon(
-                                            Icons.chevron_right,
-                                            color: Colors.black,
-                                            size: 40,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 8, 8, 8),
+                                  child: Icon(
+                                    Icons.now_widgets_outlined,
+                                    color: Colors.black,
+                                    size: 70,
                                   ),
                                 ),
-                              );
-                            },
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 8),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          getJsonField(
+                                            thingsListItem,
+                                            r'''$.name''',
+                                          ).toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 18,
+                                              ),
+                                        ),
+                                        Text(
+                                          'Description',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 12,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 8, 8, 8),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      FFAppState().MyThingName = getJsonField(
+                                        thingsListItem,
+                                        r'''$.name''',
+                                      ).toString();
+                                      FFAppState().MyThingID = getJsonField(
+                                        thingsListItem,
+                                        r'''$.id''',
+                                      ).toString();
+
+                                      context.pushNamed('ThingName');
+                                    },
+                                    child: Icon(
+                                      Icons.chevron_right,
+                                      color: Colors.black,
+                                      size: 40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
-                    );
-                  },
-                ),
-              ],
-            ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
