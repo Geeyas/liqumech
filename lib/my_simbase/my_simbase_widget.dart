@@ -275,7 +275,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                                   title: Text('Last Set Value'),
                                   content: Text(getJsonField(
                                     (apiResultyyp?.jsonBody ?? ''),
-                                    r'''$.messages[0].message[0:3]''',
+                                    r'''$.messages[0].message''',
                                   ).toString()),
                                   actions: [
                                     TextButton(
