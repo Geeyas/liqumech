@@ -35,6 +35,7 @@ class FFAppState extends ChangeNotifier {
     _MyClientID = await secureStorage.getString('ff_MyClientID') ?? _MyClientID;
     _MyClientSecret =
         await secureStorage.getString('ff_MyClientSecret') ?? _MyClientSecret;
+    _MySimValue = await secureStorage.getInt('ff_MySimValue') ?? _MySimValue;
   }
 
   void update(VoidCallback callback) {
@@ -163,6 +164,17 @@ class FFAppState extends ChangeNotifier {
 
   void deleteMyClientSecret() {
     secureStorage.delete(key: 'ff_MyClientSecret');
+  }
+
+  int _MySimValue = 0;
+  int get MySimValue => _MySimValue;
+  set MySimValue(int _value) {
+    _MySimValue = _value;
+    secureStorage.setInt('ff_MySimValue', _value);
+  }
+
+  void deleteMySimValue() {
+    secureStorage.delete(key: 'ff_MySimValue');
   }
 }
 
