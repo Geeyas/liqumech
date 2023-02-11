@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class HomePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (Get Token)] action in Icon widget.
+  // Stores action output result for [Backend Call - API (Get Token)] action in Container widget.
   ApiCallResponse? token;
 
   /// Initialization and disposal methods.

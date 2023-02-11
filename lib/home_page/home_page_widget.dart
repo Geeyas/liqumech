@@ -93,97 +93,98 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   children: [
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                      child: Container(
-                        width: double.infinity,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Color(0x4D000000),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Icon(
-                                Icons.dashboard_outlined,
-                                color: Colors.black,
-                                size: 70,
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
+                      child: InkWell(
+                        onTap: () async {
+                          _model.token = await GetTokenCall.call(
+                            clientId: valueOrDefault(
+                                currentUserDocument?.clientId, ''),
+                            clientSecret: valueOrDefault(
+                                currentUserDocument?.clientSecret, ''),
+                          );
+                          if ((_model.token?.succeeded ?? true)) {
+                            FFAppState().update(() {
+                              FFAppState().MyUserToken = getJsonField(
+                                (_model.token?.jsonBody ?? ''),
+                                r'''$.access_token''',
+                              ).toString();
+                            });
+
+                            context.pushNamed('myThings');
+                          } else {
+                            context.pushNamed('NoThings');
+                          }
+
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                color: Color(0x4D000000),
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'My Dashboards',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 18,
-                                          ),
-                                    ),
-                                    Text(
-                                      'Control your devices from the cloud',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 12,
-                                          ),
-                                    ),
-                                  ],
+                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                child: Icon(
+                                  Icons.dashboard_outlined,
+                                  color: Colors.black,
+                                  size: 70,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: InkWell(
-                                onTap: () async {
-                                  _model.token = await GetTokenCall.call(
-                                    clientId: valueOrDefault(
-                                        currentUserDocument?.clientId, ''),
-                                    clientSecret: valueOrDefault(
-                                        currentUserDocument?.clientSecret, ''),
-                                  );
-                                  if ((_model.token?.succeeded ?? true)) {
-                                    FFAppState().update(() {
-                                      FFAppState().MyUserToken = getJsonField(
-                                        (_model.token?.jsonBody ?? ''),
-                                        r'''$.access_token''',
-                                      ).toString();
-                                    });
-
-                                    context.pushNamed('myThings');
-                                  } else {
-                                    context.pushNamed('NoThings');
-                                  }
-
-                                  setState(() {});
-                                },
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 8),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'My Dashboards',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 18,
+                                            ),
+                                      ),
+                                      Text(
+                                        'Control your devices from the cloud',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 12,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                                 child: Icon(
                                   Icons.chevron_right,
                                   color: Colors.black,
                                   size: 40,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
