@@ -7,6 +7,8 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'my_simbase_device_model.dart';
+export 'my_simbase_device_model.dart';
 
 class MySimbaseDeviceWidget extends StatefulWidget {
   const MySimbaseDeviceWidget({Key? key}) : super(key: key);
@@ -16,21 +18,24 @@ class MySimbaseDeviceWidget extends StatefulWidget {
 }
 
 class _MySimbaseDeviceWidgetState extends State<MySimbaseDeviceWidget> {
-  ApiCallResponse? apiResult821;
-  TextEditingController? textController;
-  final _unfocusNode = FocusNode();
+  late MySimbaseDeviceModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    _model = createModel(context, () => MySimbaseDeviceModel());
+
+    _model.textController = TextEditingController();
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    textController?.dispose();
     super.dispose();
   }
 
@@ -100,7 +105,7 @@ class _MySimbaseDeviceWidgetState extends State<MySimbaseDeviceWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                         child: TextFormField(
-                          controller: textController,
+                          controller: _model.textController,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -149,6 +154,8 @@ class _MySimbaseDeviceWidgetState extends State<MySimbaseDeviceWidget> {
                           ),
                           style: FlutterFlowTheme.of(context).bodyText2,
                           keyboardType: TextInputType.number,
+                          validator: _model.textControllerValidator
+                              .asValidator(context),
                         ),
                       ),
                     ),
@@ -159,14 +166,15 @@ class _MySimbaseDeviceWidgetState extends State<MySimbaseDeviceWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          apiResult821 = await SimbaseAPIGroup.sendSMSCall.call(
+                          _model.apiResult821 =
+                              await SimbaseAPIGroup.sendSMSCall.call(
                             apiKey: valueOrDefault(
                                 currentUserDocument?.simbaseKey, ''),
                             iccId: valueOrDefault(
                                 currentUserDocument?.clientSim, ''),
-                            message: textController!.text,
+                            message: _model.textController.text,
                           );
-                          if ((apiResult821?.succeeded ?? true)) {
+                          if ((_model.apiResult821?.succeeded ?? true)) {
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {

@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'test_page_model.dart';
+export 'test_page_model.dart';
 
 class TestPageWidget extends StatefulWidget {
   const TestPageWidget({Key? key}) : super(key: key);
@@ -15,12 +17,21 @@ class TestPageWidget extends StatefulWidget {
 }
 
 class _TestPageWidgetState extends State<TestPageWidget> {
-  Completer<ApiCallResponse>? _apiRequestCompleter;
-  final _unfocusNode = FocusNode();
+  late TestPageModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => TestPageModel());
+  }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -65,7 +76,7 @@ class _TestPageWidgetState extends State<TestPageWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: FutureBuilder<ApiCallResponse>(
-            future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
+            future: (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
                   ..complete(ArduinoIoTCloudGroup.callThingsCall.call(
                     authToken: FFAppState().MyUserToken,
                   )))
@@ -92,8 +103,8 @@ class _TestPageWidgetState extends State<TestPageWidget> {
                   ).toList();
                   return RefreshIndicator(
                     onRefresh: () async {
-                      setState(() => _apiRequestCompleter = null);
-                      await waitForApiRequestCompleter();
+                      setState(() => _model.apiRequestCompleter = null);
+                      await _model.waitForApiRequestCompleter();
                     },
                     child: GridView.builder(
                       padding: EdgeInsets.zero,
@@ -157,20 +168,5 @@ class _TestPageWidgetState extends State<TestPageWidget> {
         ),
       ),
     );
-  }
-
-  Future waitForApiRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
   }
 }

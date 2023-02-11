@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'thing_name_model.dart';
+export 'thing_name_model.dart';
 
 class ThingNameWidget extends StatefulWidget {
   const ThingNameWidget({Key? key}) : super(key: key);
@@ -15,12 +17,21 @@ class ThingNameWidget extends StatefulWidget {
 }
 
 class _ThingNameWidgetState extends State<ThingNameWidget> {
-  Completer<ApiCallResponse>? _apiRequestCompleter;
-  final _unfocusNode = FocusNode();
+  late ThingNameModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => ThingNameModel());
+  }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -65,7 +76,7 @@ class _ThingNameWidgetState extends State<ThingNameWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: FutureBuilder<ApiCallResponse>(
-            future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
+            future: (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
                   ..complete(ArduinoIoTCloudGroup.showThingCall.call(
                     authToken: FFAppState().MyUserToken,
                     thingId: FFAppState().MyThingID,
@@ -104,8 +115,8 @@ class _ThingNameWidgetState extends State<ThingNameWidget> {
                   }
                   return RefreshIndicator(
                     onRefresh: () async {
-                      setState(() => _apiRequestCompleter = null);
-                      await waitForApiRequestCompleter();
+                      setState(() => _model.apiRequestCompleter = null);
+                      await _model.waitForApiRequestCompleter();
                     },
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -268,20 +279,5 @@ class _ThingNameWidgetState extends State<ThingNameWidget> {
         ),
       ),
     );
-  }
-
-  Future waitForApiRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
   }
 }

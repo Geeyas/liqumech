@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'my_things_model.dart';
+export 'my_things_model.dart';
 
 class MyThingsWidget extends StatefulWidget {
   const MyThingsWidget({Key? key}) : super(key: key);
@@ -15,12 +17,21 @@ class MyThingsWidget extends StatefulWidget {
 }
 
 class _MyThingsWidgetState extends State<MyThingsWidget> {
-  Completer<ApiCallResponse>? _apiRequestCompleter;
-  final _unfocusNode = FocusNode();
+  late MyThingsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => MyThingsModel());
+  }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -65,7 +76,7 @@ class _MyThingsWidgetState extends State<MyThingsWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: FutureBuilder<ApiCallResponse>(
-            future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
+            future: (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
                   ..complete(ArduinoIoTCloudGroup.callThingsCall.call(
                     authToken: FFAppState().MyUserToken,
                   )))
@@ -95,8 +106,8 @@ class _MyThingsWidgetState extends State<MyThingsWidget> {
                   ).toList();
                   return RefreshIndicator(
                     onRefresh: () async {
-                      setState(() => _apiRequestCompleter = null);
-                      await waitForApiRequestCompleter();
+                      setState(() => _model.apiRequestCompleter = null);
+                      await _model.waitForApiRequestCompleter();
                     },
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -206,20 +217,5 @@ class _MyThingsWidgetState extends State<MyThingsWidget> {
         ),
       ),
     );
-  }
-
-  Future waitForApiRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
   }
 }

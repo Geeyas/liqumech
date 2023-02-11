@@ -5,6 +5,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'is_status_model.dart';
+export 'is_status_model.dart';
 
 class IsStatusWidget extends StatefulWidget {
   const IsStatusWidget({Key? key}) : super(key: key);
@@ -14,14 +16,21 @@ class IsStatusWidget extends StatefulWidget {
 }
 
 class _IsStatusWidgetState extends State<IsStatusWidget> {
-  ApiCallResponse? apiResult3vt;
-  ApiCallResponse? apiResultarh;
-  bool? switchValue;
-  final _unfocusNode = FocusNode();
+  late IsStatusModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => IsStatusModel());
+  }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -80,11 +89,11 @@ class _IsStatusWidgetState extends State<IsStatusWidget> {
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
                     child: Switch.adaptive(
-                      value: switchValue ??= FFAppState().MyWidgetStatus,
+                      value: _model.switchValue ??= FFAppState().MyWidgetStatus,
                       onChanged: (newValue) async {
-                        setState(() => switchValue = newValue!);
+                        setState(() => _model.switchValue = newValue!);
                         if (newValue!) {
-                          apiResultarh =
+                          _model.apiResultarh =
                               await ArduinoIoTCloudGroup.turnOnCall.call(
                             authToken: FFAppState().MyUserToken,
                             propertyId: FFAppState().MyWidgetID,
@@ -109,7 +118,7 @@ class _IsStatusWidgetState extends State<IsStatusWidget> {
 
                           setState(() {});
                         } else {
-                          apiResult3vt =
+                          _model.apiResult3vt =
                               await ArduinoIoTCloudGroup.turnOffCall.call(
                             thingId: FFAppState().MyThingID,
                             propertyId: FFAppState().MyWidgetID,

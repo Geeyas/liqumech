@@ -6,6 +6,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'home_page_model.dart';
+export 'home_page_model.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({Key? key}) : super(key: key);
@@ -15,12 +17,21 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
-  ApiCallResponse? token;
-  final _unfocusNode = FocusNode();
+  late HomePageModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => HomePageModel());
+  }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -144,16 +155,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                               child: InkWell(
                                 onTap: () async {
-                                  token = await GetTokenCall.call(
+                                  _model.token = await GetTokenCall.call(
                                     clientId: valueOrDefault(
                                         currentUserDocument?.clientId, ''),
                                     clientSecret: valueOrDefault(
                                         currentUserDocument?.clientSecret, ''),
                                   );
-                                  if ((token?.succeeded ?? true)) {
+                                  if ((_model.token?.succeeded ?? true)) {
                                     FFAppState().update(() {
                                       FFAppState().MyUserToken = getJsonField(
-                                        (token?.jsonBody ?? ''),
+                                        (_model.token?.jsonBody ?? ''),
                                         r'''$.access_token''',
                                       ).toString();
                                     });

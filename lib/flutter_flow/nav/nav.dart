@@ -78,15 +78,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? HomePageWidget() : SignInPageWidget(),
           routes: [
             FFRoute(
+              name: 'SignInPage',
+              path: 'signInPage',
+              builder: (context, params) => SignInPageWidget(),
+            ),
+            FFRoute(
               name: 'HomePage',
               path: 'homePage',
               requireAuth: true,
               builder: (context, params) => HomePageWidget(),
-            ),
-            FFRoute(
-              name: 'SignInPage',
-              path: 'signInPage',
-              builder: (context, params) => SignInPageWidget(),
             ),
             FFRoute(
               name: 'PasswordReset',
@@ -137,6 +137,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'testPage',
               path: 'testPage',
               builder: (context, params) => TestPageWidget(),
+            ),
+            FFRoute(
+              name: 'IntegerTest',
+              path: 'integerTest',
+              builder: (context, params) => IntegerTestWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

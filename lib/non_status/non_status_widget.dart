@@ -6,6 +6,8 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'non_status_model.dart';
+export 'non_status_model.dart';
 
 class NonStatusWidget extends StatefulWidget {
   const NonStatusWidget({Key? key}) : super(key: key);
@@ -15,21 +17,24 @@ class NonStatusWidget extends StatefulWidget {
 }
 
 class _NonStatusWidgetState extends State<NonStatusWidget> {
-  ApiCallResponse? apiResults7k;
-  TextEditingController? textController;
-  final _unfocusNode = FocusNode();
+  late NonStatusModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    _model = createModel(context, () => NonStatusModel());
+
+    _model.textController = TextEditingController();
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    textController?.dispose();
     super.dispose();
   }
 
@@ -159,7 +164,7 @@ class _NonStatusWidgetState extends State<NonStatusWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                           child: TextFormField(
-                            controller: textController,
+                            controller: _model.textController,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -208,6 +213,8 @@ class _NonStatusWidgetState extends State<NonStatusWidget> {
                             ),
                             style: FlutterFlowTheme.of(context).bodyText2,
                             keyboardType: TextInputType.number,
+                            validator: _model.textControllerValidator
+                                .asValidator(context),
                           ),
                         ),
                       ),
@@ -218,14 +225,15 @@ class _NonStatusWidgetState extends State<NonStatusWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            apiResults7k =
+                            _model.apiResults7k =
                                 await ArduinoIoTCloudGroup.updateValueCall.call(
                               authToken: FFAppState().MyUserToken,
                               thingId: FFAppState().MyThingID,
                               propertyId: FFAppState().MyWidgetID,
-                              newValue: int.tryParse(textController!.text),
+                              newValue:
+                                  int.tryParse(_model.textController.text),
                             );
-                            if ((apiResults7k?.succeeded ?? true)) {
+                            if ((_model.apiResults7k?.succeeded ?? true)) {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {

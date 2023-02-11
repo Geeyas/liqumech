@@ -1,22 +1,21 @@
-import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'no_things_model.dart';
-export 'no_things_model.dart';
+import 'integer_test_model.dart';
+export 'integer_test_model.dart';
 
-class NoThingsWidget extends StatefulWidget {
-  const NoThingsWidget({Key? key}) : super(key: key);
+class IntegerTestWidget extends StatefulWidget {
+  const IntegerTestWidget({Key? key}) : super(key: key);
 
   @override
-  _NoThingsWidgetState createState() => _NoThingsWidgetState();
+  _IntegerTestWidgetState createState() => _IntegerTestWidgetState();
 }
 
-class _NoThingsWidgetState extends State<NoThingsWidget> {
-  late NoThingsModel _model;
+class _IntegerTestWidgetState extends State<IntegerTestWidget> {
+  late IntegerTestModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -24,7 +23,7 @@ class _NoThingsWidgetState extends State<NoThingsWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => NoThingsModel());
+    _model = createModel(context, () => IntegerTestModel());
   }
 
   @override
@@ -55,15 +54,12 @@ class _NoThingsWidgetState extends State<NoThingsWidget> {
             color: Colors.white,
             size: 30,
           ),
-          onPressed: () async {
-            GoRouter.of(context).prepareAuthEvent();
-            await signOut();
-
-            context.goNamedAuth('SignInPage', mounted);
+          onPressed: () {
+            print('IconButton pressed ...');
           },
         ),
         title: Text(
-          'No Thing',
+          'Integer Test',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -80,20 +76,19 @@ class _NoThingsWidgetState extends State<NoThingsWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      'assets/images/hide_the_pain_harold.jpg',
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
+              ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                    child: Text(
+                      FFAppState().MySimValue.toString(),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

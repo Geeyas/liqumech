@@ -7,6 +7,8 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'my_simbase_model.dart';
+export 'my_simbase_model.dart';
 
 class MySimbaseWidget extends StatefulWidget {
   const MySimbaseWidget({Key? key}) : super(key: key);
@@ -16,13 +18,21 @@ class MySimbaseWidget extends StatefulWidget {
 }
 
 class _MySimbaseWidgetState extends State<MySimbaseWidget> {
-  ApiCallResponse? apiResultyyp;
-  ApiCallResponse? simbaseToken;
-  final _unfocusNode = FocusNode();
+  late MySimbaseModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => MySimbaseModel());
+  }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -150,7 +160,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                               ) ??
                               false;
                           if (confirmDialogResponse) {
-                            simbaseToken =
+                            _model.simbaseToken =
                                 await SimbaseAPIGroup.sendSMSCall.call(
                               apiKey: valueOrDefault(
                                   currentUserDocument?.simbaseKey, ''),
@@ -158,7 +168,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                                   currentUserDocument?.clientSim, ''),
                               message: 'flutter test: value reset!',
                             );
-                            if ((simbaseToken?.succeeded ?? true)) {
+                            if ((_model.simbaseToken?.succeeded ?? true)) {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -262,20 +272,21 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                       ),
                       InkWell(
                         onTap: () async {
-                          apiResultyyp = await SimbaseAPIGroup.getSMSCall.call(
+                          _model.apiResultyyp =
+                              await SimbaseAPIGroup.getSMSCall.call(
                             apiKey: valueOrDefault(
                                 currentUserDocument?.simbaseKey, ''),
                             iccId: valueOrDefault(
                                 currentUserDocument?.clientSim, ''),
                           );
-                          if ((apiResultyyp?.succeeded ?? true)) {
+                          if ((_model.apiResultyyp?.succeeded ?? true)) {
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {
                                 return AlertDialog(
                                   title: Text('Last Set Value'),
                                   content: Text(getJsonField(
-                                    (apiResultyyp?.jsonBody ?? ''),
+                                    (_model.apiResultyyp?.jsonBody ?? ''),
                                     r'''$.messages[0].message''',
                                   ).toString()),
                                   actions: [
@@ -292,28 +303,38 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                               FFAppState().MySimValue =
                                   functions.getLastIntegers(
                                       getJsonField(
-                                        (apiResultyyp?.jsonBody ?? ''),
+                                        (_model.apiResultyyp?.jsonBody ?? ''),
                                         r'''$.messages[0].message''',
                                       ).toString(),
                                       4)!;
                             });
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Your Integer Value is '),
-                                  content:
-                                      Text(FFAppState().MySimValue.toString()),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text(
+                                          'Continue to last value display as integer?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Confirm'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              context.pushNamed('IntegerTest');
+                            } else {
+                              context.pushNamed('mySimbase');
+                            }
                           } else {
                             await showDialog(
                               context: context,
