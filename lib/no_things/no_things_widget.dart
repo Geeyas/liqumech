@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'no_things_model.dart';
@@ -65,9 +66,10 @@ class _NoThingsWidgetState extends State<NoThingsWidget> {
         title: Text(
           'No Thing',
           style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
+                fontFamily: 'DIN pro',
                 color: Colors.white,
                 fontSize: 22,
+                useGoogleFonts: false,
               ),
         ),
         actions: [],

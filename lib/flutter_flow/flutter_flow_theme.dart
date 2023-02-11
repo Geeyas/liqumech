@@ -45,13 +45,13 @@ abstract class FlutterFlowTheme {
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  late Color primaryColor = const Color(0xFF4B39EF);
-  late Color secondaryColor = const Color(0xFF39D2C0);
-  late Color tertiaryColor = const Color(0xFFEE8B60);
-  late Color alternate = const Color(0xFFFF5963);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color primaryColor = const Color(0xFFD62E32);
+  late Color secondaryColor = const Color(0xFF1A10E9);
+  late Color tertiaryColor = const Color(0xFF2E87C4);
+  late Color alternate = const Color(0xFF2E87C4);
+  late Color primaryBackground = const Color(0xFF81B3D5);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color primaryText = const Color(0xFF101213);
+  late Color primaryText = const Color(0xFF0A0A0A);
   late Color secondaryText = const Color(0xFF57636C);
 
   late Color primaryBtnText = Color(0xFFFFFFFF);
@@ -86,51 +86,51 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get title1Family => 'Poppins';
-  TextStyle get title1 => GoogleFonts.getFont(
-        'Poppins',
+  String get title1Family => 'DIN pro';
+  TextStyle get title1 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 24,
       );
-  String get title2Family => 'Poppins';
-  TextStyle get title2 => GoogleFonts.getFont(
-        'Poppins',
+  String get title2Family => 'DIN pro';
+  TextStyle get title2 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.secondaryText,
         fontWeight: FontWeight.w600,
         fontSize: 22,
       );
-  String get title3Family => 'Poppins';
-  TextStyle get title3 => GoogleFonts.getFont(
-        'Poppins',
+  String get title3Family => 'DIN pro';
+  TextStyle get title3 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 20,
       );
-  String get subtitle1Family => 'Poppins';
-  TextStyle get subtitle1 => GoogleFonts.getFont(
-        'Poppins',
+  String get subtitle1Family => 'DIN pro';
+  TextStyle get subtitle1 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 18,
       );
-  String get subtitle2Family => 'Poppins';
-  TextStyle get subtitle2 => GoogleFonts.getFont(
-        'Poppins',
+  String get subtitle2Family => 'DIN pro';
+  TextStyle get subtitle2 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.secondaryText,
         fontWeight: FontWeight.w600,
         fontSize: 16,
       );
-  String get bodyText1Family => 'Poppins';
-  TextStyle get bodyText1 => GoogleFonts.getFont(
-        'Poppins',
+  String get bodyText1Family => 'DIN pro';
+  TextStyle get bodyText1 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 14,
       );
-  String get bodyText2Family => 'Poppins';
-  TextStyle get bodyText2 => GoogleFonts.getFont(
-        'Poppins',
+  String get bodyText2Family => 'DIN pro';
+  TextStyle get bodyText2 => TextStyle(
+        fontFamily: 'DIN pro',
         color: theme.secondaryText,
         fontWeight: FontWeight.w600,
         fontSize: 14,
