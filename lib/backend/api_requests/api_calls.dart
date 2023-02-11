@@ -200,6 +200,12 @@ class CallDevicesCall {
       cache: false,
     );
   }
+
+  dynamic thingname(dynamic response) => getJsonField(
+        response,
+        r'''$[:].thing.name''',
+        true,
+      );
 }
 
 /// End Arduino IoT Cloud Group Code
