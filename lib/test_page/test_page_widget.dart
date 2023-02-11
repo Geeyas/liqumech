@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'test_page_model.dart';
@@ -90,9 +89,8 @@ class _TestPageWidgetState extends State<TestPageWidget> {
                   child: SizedBox(
                     width: 50,
                     height: 50,
-                    child: SpinKitCircle(
+                    child: CircularProgressIndicator(
                       color: Color(0xFFD62E32),
-                      size: 50,
                     ),
                   ),
                 );
