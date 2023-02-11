@@ -203,7 +203,7 @@ class CallDevicesCall {
 
   dynamic thingname(dynamic response) => getJsonField(
         response,
-        r'''$[:].thing.name''',
+        r'''$[:].thing.properties[:].name''',
         true,
       );
   dynamic thingraw(dynamic response) => getJsonField(
