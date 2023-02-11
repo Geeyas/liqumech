@@ -278,7 +278,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
                                     content: Text(
-                                        'Continue to last value display as integer?'),
+                                        'Continue to last value display as double?'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(
@@ -296,7 +296,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                               ) ??
                               false;
                           if (confirmDialogResponse) {
-                            context.pushNamed('IntegerTest');
+                            context.pushNamed('DoubleTest');
                           } else {
                             context.pushNamed('mySimbase');
                           }

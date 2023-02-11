@@ -11,12 +11,12 @@ import '../backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../auth/auth_util.dart';
 
-int? getLastIntegers(
+double? getLastIntegers(
   String textToExtractFrom,
   int numberOfInteger,
 ) {
   String finalResult = textToExtractFrom.substring(
       numberOfInteger, textToExtractFrom.length - 4);
-  int finalResultAsInteger = int.parse(finalResult);
+  double finalResultAsInteger = double.parse(finalResult);
   return finalResultAsInteger;
 }

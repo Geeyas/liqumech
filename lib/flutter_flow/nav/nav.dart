@@ -139,9 +139,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => TestPageWidget(),
             ),
             FFRoute(
-              name: 'IntegerTest',
-              path: 'integerTest',
-              builder: (context, params) => IntegerTestWidget(),
+              name: 'DoubleTest',
+              path: 'doubleTest',
+              builder: (context, params) => DoubleTestWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

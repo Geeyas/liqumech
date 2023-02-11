@@ -4,18 +4,18 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'integer_test_model.dart';
-export 'integer_test_model.dart';
+import 'double_test_model.dart';
+export 'double_test_model.dart';
 
-class IntegerTestWidget extends StatefulWidget {
-  const IntegerTestWidget({Key? key}) : super(key: key);
+class DoubleTestWidget extends StatefulWidget {
+  const DoubleTestWidget({Key? key}) : super(key: key);
 
   @override
-  _IntegerTestWidgetState createState() => _IntegerTestWidgetState();
+  _DoubleTestWidgetState createState() => _DoubleTestWidgetState();
 }
 
-class _IntegerTestWidgetState extends State<IntegerTestWidget> {
-  late IntegerTestModel _model;
+class _DoubleTestWidgetState extends State<DoubleTestWidget> {
+  late DoubleTestModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -23,7 +23,7 @@ class _IntegerTestWidgetState extends State<IntegerTestWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => IntegerTestModel());
+    _model = createModel(context, () => DoubleTestModel());
   }
 
   @override
@@ -59,7 +59,7 @@ class _IntegerTestWidgetState extends State<IntegerTestWidget> {
           },
         ),
         title: Text(
-          'Integer Test',
+          'Double Type Test',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'DIN pro',
                 color: Colors.white,

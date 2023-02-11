@@ -12,4 +12,4 @@ export 'thing_name/thing_name_widget.dart' show ThingNameWidget;
 export 'is_status/is_status_widget.dart' show IsStatusWidget;
 export 'non_status/non_status_widget.dart' show NonStatusWidget;
 export 'test_page/test_page_widget.dart' show TestPageWidget;
-export 'integer_test/integer_test_widget.dart' show IntegerTestWidget;
+export 'double_test/double_test_widget.dart' show DoubleTestWidget;
