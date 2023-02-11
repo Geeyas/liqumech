@@ -276,7 +276,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget>
                             title: Text('Last Set Value'),
                             content: Text(getJsonField(
                               (_model.apiResultyyp?.jsonBody ?? ''),
-                              r'''$.message[0].message''',
+                              r'''$.messages[0].message''',
                             ).toString()),
                             actions: [
                               TextButton(
@@ -292,7 +292,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget>
                         FFAppState().MySimValue = functions.getLastIntegers(
                             getJsonField(
                               (_model.apiResultyyp?.jsonBody ?? ''),
-                              r'''$.message[0].message''',
+                              r'''$.messages[0].message''',
                             ).toString(),
                             10)!;
                       });
