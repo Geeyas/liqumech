@@ -206,6 +206,11 @@ class CallDevicesCall {
         r'''$[:].thing.name''',
         true,
       );
+  dynamic thingraw(dynamic response) => getJsonField(
+        response,
+        r'''$[:]''',
+        true,
+      );
 }
 
 /// End Arduino IoT Cloud Group Code
