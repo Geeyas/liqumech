@@ -333,7 +333,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                             if (confirmDialogResponse) {
                               context.pushNamed('IntegerTest');
                             } else {
-                              context.pushNamed('mySimbaseDevice');
+                              context.pushNamed('mySimbase');
                             }
                           } else {
                             await showDialog(
