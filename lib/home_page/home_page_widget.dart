@@ -173,7 +173,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Control your devices from the cloud',
+                                            'Update values for  your Things',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
@@ -255,6 +255,106 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           ),
                                           Text(
                                             'Control your Simbase from the cloud',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'DIN pro',
+                                                  fontSize: 12,
+                                                  useGoogleFonts: false,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 8, 8, 8),
+                                    child: Icon(
+                                      Icons.chevron_right,
+                                      color: Colors.black,
+                                      size: 40,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          child: InkWell(
+                            onTap: () async {
+                              _model.token = await GetTokenCall.call(
+                                clientId: valueOrDefault(
+                                    currentUserDocument?.clientId, ''),
+                                clientSecret: valueOrDefault(
+                                    currentUserDocument?.clientSecret, ''),
+                              );
+                              if ((_model.token?.succeeded ?? true)) {
+                                FFAppState().update(() {
+                                  FFAppState().MyUserToken = getJsonField(
+                                    (_model.token?.jsonBody ?? ''),
+                                    r'''$.access_token''',
+                                  ).toString();
+                                });
+
+                                context.pushNamed('myDevices');
+                              } else {
+                                context.pushNamed('NoThings');
+                              }
+
+                              setState(() {});
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 8, 8, 8),
+                                    child: Icon(
+                                      Icons.devices_sharp,
+                                      color: Colors.black,
+                                      size: 70,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 8, 0, 8),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'My Devices',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'DIN pro',
+                                                  fontSize: 18,
+                                                  useGoogleFonts: false,
+                                                ),
+                                          ),
+                                          Text(
+                                            'Control your devices from the cloud',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(

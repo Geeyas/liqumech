@@ -89,6 +89,21 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.clientProperties;
+    if (value != null) {
+      result
+        ..add('client_properties')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.isAdmin;
+    if (value != null) {
+      result
+        ..add('is_admin')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -151,6 +166,16 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.simbaseKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'client_properties':
+          result.clientProperties.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'is_admin':
+          result.isAdmin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -186,6 +211,10 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? simbaseKey;
   @override
+  final BuiltList<String>? clientProperties;
+  @override
+  final bool? isAdmin;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -202,6 +231,8 @@ class _$UsersRecord extends UsersRecord {
       this.clientSecret,
       this.clientSim,
       this.simbaseKey,
+      this.clientProperties,
+      this.isAdmin,
       this.ffRef})
       : super._();
 
@@ -226,6 +257,8 @@ class _$UsersRecord extends UsersRecord {
         clientSecret == other.clientSecret &&
         clientSim == other.clientSim &&
         simbaseKey == other.simbaseKey &&
+        clientProperties == other.clientProperties &&
+        isAdmin == other.isAdmin &&
         ffRef == other.ffRef;
   }
 
@@ -240,16 +273,20 @@ class _$UsersRecord extends UsersRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, email.hashCode),
-                                            displayName.hashCode),
-                                        photoUrl.hashCode),
-                                    uid.hashCode),
-                                createdTime.hashCode),
-                            phoneNumber.hashCode),
-                        clientId.hashCode),
-                    clientSecret.hashCode),
-                clientSim.hashCode),
-            simbaseKey.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, email.hashCode),
+                                                    displayName.hashCode),
+                                                photoUrl.hashCode),
+                                            uid.hashCode),
+                                        createdTime.hashCode),
+                                    phoneNumber.hashCode),
+                                clientId.hashCode),
+                            clientSecret.hashCode),
+                        clientSim.hashCode),
+                    simbaseKey.hashCode),
+                clientProperties.hashCode),
+            isAdmin.hashCode),
         ffRef.hashCode));
   }
 
@@ -266,6 +303,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('clientSecret', clientSecret)
           ..add('clientSim', clientSim)
           ..add('simbaseKey', simbaseKey)
+          ..add('clientProperties', clientProperties)
+          ..add('isAdmin', isAdmin)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -314,6 +353,16 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get simbaseKey => _$this._simbaseKey;
   set simbaseKey(String? simbaseKey) => _$this._simbaseKey = simbaseKey;
 
+  ListBuilder<String>? _clientProperties;
+  ListBuilder<String> get clientProperties =>
+      _$this._clientProperties ??= new ListBuilder<String>();
+  set clientProperties(ListBuilder<String>? clientProperties) =>
+      _$this._clientProperties = clientProperties;
+
+  bool? _isAdmin;
+  bool? get isAdmin => _$this._isAdmin;
+  set isAdmin(bool? isAdmin) => _$this._isAdmin = isAdmin;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -335,6 +384,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _clientSecret = $v.clientSecret;
       _clientSim = $v.clientSim;
       _simbaseKey = $v.simbaseKey;
+      _clientProperties = $v.clientProperties?.toBuilder();
+      _isAdmin = $v.isAdmin;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -356,19 +407,34 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   UsersRecord build() => _build();
 
   _$UsersRecord _build() {
-    final _$result = _$v ??
-        new _$UsersRecord._(
-            email: email,
-            displayName: displayName,
-            photoUrl: photoUrl,
-            uid: uid,
-            createdTime: createdTime,
-            phoneNumber: phoneNumber,
-            clientId: clientId,
-            clientSecret: clientSecret,
-            clientSim: clientSim,
-            simbaseKey: simbaseKey,
-            ffRef: ffRef);
+    _$UsersRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$UsersRecord._(
+              email: email,
+              displayName: displayName,
+              photoUrl: photoUrl,
+              uid: uid,
+              createdTime: createdTime,
+              phoneNumber: phoneNumber,
+              clientId: clientId,
+              clientSecret: clientSecret,
+              clientSim: clientSim,
+              simbaseKey: simbaseKey,
+              clientProperties: _clientProperties?.build(),
+              isAdmin: isAdmin,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'clientProperties';
+        _clientProperties?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'UsersRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

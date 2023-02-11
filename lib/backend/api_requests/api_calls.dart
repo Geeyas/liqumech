@@ -19,6 +19,7 @@ class ArduinoIoTCloudGroup {
   static TurnOnCall turnOnCall = TurnOnCall();
   static TurnOffCall turnOffCall = TurnOffCall();
   static UpdateValueCall updateValueCall = UpdateValueCall();
+  static CallDevicesCall callDevicesCall = CallDevicesCall();
 }
 
 class CallThingsCall {
@@ -170,6 +171,29 @@ class UpdateValueCall {
       params: {},
       body: body,
       bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class CallDevicesCall {
+  Future<ApiCallResponse> call({
+    String? authToken = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Call Devices',
+      apiUrl: '${ArduinoIoTCloudGroup.baseUrl}devices',
+      callType: ApiCallType.GET,
+      headers: {
+        ...ArduinoIoTCloudGroup.headers,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${authToken}',
+      },
+      params: {},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

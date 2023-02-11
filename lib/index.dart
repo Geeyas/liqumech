@@ -11,5 +11,5 @@ export 'my_simbase_device/my_simbase_device_widget.dart'
 export 'thing_name/thing_name_widget.dart' show ThingNameWidget;
 export 'is_status/is_status_widget.dart' show IsStatusWidget;
 export 'non_status/non_status_widget.dart' show NonStatusWidget;
-export 'test_page/test_page_widget.dart' show TestPageWidget;
 export 'double_test/double_test_widget.dart' show DoubleTestWidget;
+export 'my_devices/my_devices_widget.dart' show MyDevicesWidget;

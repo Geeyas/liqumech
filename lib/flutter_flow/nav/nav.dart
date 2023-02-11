@@ -134,14 +134,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => NonStatusWidget(),
             ),
             FFRoute(
-              name: 'testPage',
-              path: 'testPage',
-              builder: (context, params) => TestPageWidget(),
-            ),
-            FFRoute(
               name: 'DoubleTest',
               path: 'doubleTest',
               builder: (context, params) => DoubleTestWidget(),
+            ),
+            FFRoute(
+              name: 'myDevices',
+              path: 'myDevices',
+              builder: (context, params) => MyDevicesWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

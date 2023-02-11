@@ -37,6 +37,12 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'simbase_key')
   String? get simbaseKey;
 
+  @BuiltValueField(wireName: 'client_properties')
+  BuiltList<String>? get clientProperties;
+
+  @BuiltValueField(wireName: 'is_admin')
+  bool? get isAdmin;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -50,7 +56,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..clientId = ''
     ..clientSecret = ''
     ..clientSim = ''
-    ..simbaseKey = '';
+    ..simbaseKey = ''
+    ..clientProperties = ListBuilder()
+    ..isAdmin = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -84,6 +92,7 @@ Map<String, dynamic> createUsersRecordData({
   String? clientSecret,
   String? clientSim,
   String? simbaseKey,
+  bool? isAdmin,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -98,7 +107,9 @@ Map<String, dynamic> createUsersRecordData({
         ..clientId = clientId
         ..clientSecret = clientSecret
         ..clientSim = clientSim
-        ..simbaseKey = simbaseKey,
+        ..simbaseKey = simbaseKey
+        ..clientProperties = null
+        ..isAdmin = isAdmin,
     ),
   );
 
