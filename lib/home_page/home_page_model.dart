@@ -13,7 +13,7 @@ class HomePageModel extends FlutterFlowModel {
   // Stores action output result for [Backend Call - API (Get Token)] action in Container widget.
   ApiCallResponse? token;
   // Stores action output result for [Backend Call - API (Get Token)] action in Container widget.
-  ApiCallResponse? token;
+  ApiCallResponse? token2;
 
   /// Initialization and disposal methods.
 

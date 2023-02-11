@@ -286,16 +286,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                           child: InkWell(
                             onTap: () async {
-                              _model.token = await GetTokenCall.call(
+                              _model.token2 = await GetTokenCall.call(
                                 clientId: valueOrDefault(
                                     currentUserDocument?.clientId, ''),
                                 clientSecret: valueOrDefault(
                                     currentUserDocument?.clientSecret, ''),
                               );
-                              if ((_model.token?.succeeded ?? true)) {
+                              if ((_model.token2?.succeeded ?? true)) {
                                 FFAppState().update(() {
                                   FFAppState().MyUserToken = getJsonField(
-                                    (_model.token?.jsonBody ?? ''),
+                                    (_model.token2?.jsonBody ?? ''),
                                     r'''$.access_token''',
                                   ).toString();
                                 });
