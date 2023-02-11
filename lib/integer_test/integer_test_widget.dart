@@ -54,8 +54,8 @@ class _IntegerTestWidgetState extends State<IntegerTestWidget> {
             color: Colors.white,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            context.pushNamed('mySimbase');
           },
         ),
         title: Text(
