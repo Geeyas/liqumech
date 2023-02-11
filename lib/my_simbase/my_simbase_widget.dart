@@ -306,7 +306,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                                         (_model.apiResultyyp?.jsonBody ?? ''),
                                         r'''$.messages[0].message''',
                                       ).toString(),
-                                      4)!;
+                                      10)!;
                             });
                             var confirmDialogResponse = await showDialog<bool>(
                                   context: context,
@@ -333,7 +333,7 @@ class _MySimbaseWidgetState extends State<MySimbaseWidget> {
                             if (confirmDialogResponse) {
                               context.pushNamed('IntegerTest');
                             } else {
-                              context.pushNamed('mySimbase');
+                              context.pushNamed('mySimbaseDevice');
                             }
                           } else {
                             await showDialog(
