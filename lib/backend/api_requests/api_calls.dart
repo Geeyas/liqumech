@@ -182,10 +182,8 @@ class UpdateValueCall {
 class CallDevicesCall {
   Future<ApiCallResponse> call({
     String? authToken = '',
-    List<String>? deviceIdList,
+    String? deviceId = '',
   }) {
-    final deviceId = _serializeList(deviceIdList);
-
     return ApiManager.instance.makeApiCall(
       callName: 'Call Devices',
       apiUrl: '${ArduinoIoTCloudGroup.baseUrl}devices/${deviceId}',

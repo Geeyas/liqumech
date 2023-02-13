@@ -92,9 +92,11 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                           .apiRequestCompleter ??= Completer<ApiCallResponse>()
                         ..complete(ArduinoIoTCloudGroup.callDevicesCall.call(
                           authToken: FFAppState().MyUserToken,
-                          deviceIdList: (currentUserDocument?.clientProperties
-                                  ?.toList() ??
-                              []),
+                          deviceId: (currentUserDocument?.clientProperties
+                                      ?.toList() ??
+                                  [])
+                              .length
+                              .toString(),
                         )))
                       .future,
                   builder: (context, snapshot) {
