@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_devices_model.dart';
@@ -151,14 +152,49 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 16, 16, 16),
-                                      child: Icon(
-                                        Icons.settings_outlined,
-                                        color: Colors.black,
-                                        size: 70,
-                                      ),
+                                    Stack(
+                                      children: [
+                                        if ((getJsonField(
+                                                  devicesGridItem,
+                                                  r'''$.type''',
+                                                ) ==
+                                                'status') ||
+                                            (getJsonField(
+                                                  devicesGridItem,
+                                                  r'''$.type''',
+                                                ) ==
+                                                'STATUS'))
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16, 16, 16, 16),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.toggleOff,
+                                              color: Colors.black,
+                                              size: 70,
+                                            ),
+                                          ),
+                                        if (!((getJsonField(
+                                                  devicesGridItem,
+                                                  r'''$.type''',
+                                                ) ==
+                                                'status') ||
+                                            (getJsonField(
+                                                  devicesGridItem,
+                                                  r'''$.type''',
+                                                ) ==
+                                                'STATUS')))
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16, 16, 16, 16),
+                                            child: Icon(
+                                              Icons.edit_outlined,
+                                              color: Colors.black,
+                                              size: 70,
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                     Text(
                                       getJsonField(
