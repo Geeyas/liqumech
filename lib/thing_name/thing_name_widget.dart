@@ -57,7 +57,7 @@ class _ThingNameWidgetState extends State<ThingNameWidget> {
             size: 30,
           ),
           onPressed: () async {
-            context.pushNamed('myThings');
+            context.pushNamed('myDevices');
           },
         ),
         title: Text(

@@ -134,77 +134,114 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                             return Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 5,
-                                      color: Color(0x33000000),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        if ((getJsonField(
-                                                  devicesGridItem,
-                                                  r'''$.type''',
-                                                ) ==
-                                                'status') ||
-                                            (getJsonField(
-                                                  devicesGridItem,
-                                                  r'''$.type''',
-                                                ) ==
-                                                'STATUS'))
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 16, 16, 16),
-                                            child: FaIcon(
-                                              FontAwesomeIcons.toggleOff,
-                                              color: Colors.black,
-                                              size: 70,
+                              child: InkWell(
+                                onTap: () async {
+                                  FFAppState().update(() {
+                                    FFAppState().MyWidgetName = getJsonField(
+                                      devicesGridItem,
+                                      r'''$.name''',
+                                    ).toString();
+                                    FFAppState().MyWidgetID = getJsonField(
+                                      devicesGridItem,
+                                      r'''$.id''',
+                                    ).toString();
+                                    FFAppState().MyWidgetType = getJsonField(
+                                      devicesGridItem,
+                                      r'''$.type''',
+                                    ).toString();
+                                    FFAppState().MyWidgetOldValue =
+                                        getJsonField(
+                                      devicesGridItem,
+                                      r'''$.last_value''',
+                                    ).toString();
+                                  });
+                                  if (FFAppState().MyWidgetType == 'STATUS') {
+                                    context.pushNamed('IsStatus');
+
+                                    if (FFAppState().MyWidgetOldValue ==
+                                        'true') {
+                                      FFAppState().update(() {
+                                        FFAppState().MyWidgetStatus = true;
+                                      });
+                                    } else {
+                                      FFAppState().update(() {
+                                        FFAppState().MyWidgetStatus = false;
+                                      });
+                                    }
+                                  } else {
+                                    context.pushNamed('NonStatus');
+                                  }
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 5,
+                                        color: Color(0x33000000),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          if ((getJsonField(
+                                                    devicesGridItem,
+                                                    r'''$.type''',
+                                                  ) ==
+                                                  'status') ||
+                                              (getJsonField(
+                                                    devicesGridItem,
+                                                    r'''$.type''',
+                                                  ) ==
+                                                  'STATUS'))
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(16, 16, 16, 16),
+                                              child: FaIcon(
+                                                FontAwesomeIcons.toggleOff,
+                                                color: Colors.black,
+                                                size: 70,
+                                              ),
                                             ),
-                                          ),
-                                        if (!((getJsonField(
-                                                  devicesGridItem,
-                                                  r'''$.type''',
-                                                ) ==
-                                                'status') ||
-                                            (getJsonField(
-                                                  devicesGridItem,
-                                                  r'''$.type''',
-                                                ) ==
-                                                'STATUS')))
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 16, 16, 16),
-                                            child: Icon(
-                                              Icons.edit_outlined,
-                                              color: Colors.black,
-                                              size: 70,
+                                          if (!((getJsonField(
+                                                    devicesGridItem,
+                                                    r'''$.type''',
+                                                  ) ==
+                                                  'status') ||
+                                              (getJsonField(
+                                                    devicesGridItem,
+                                                    r'''$.type''',
+                                                  ) ==
+                                                  'STATUS')))
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(16, 16, 16, 16),
+                                              child: Icon(
+                                                Icons.edit_outlined,
+                                                color: Colors.black,
+                                                size: 70,
+                                              ),
                                             ),
-                                          ),
-                                      ],
-                                    ),
-                                    Text(
-                                      getJsonField(
-                                        devicesGridItem,
-                                        r'''$.name''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                      Text(
+                                        getJsonField(
+                                          devicesGridItem,
+                                          r'''$.name''',
+                                        ).toString(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
