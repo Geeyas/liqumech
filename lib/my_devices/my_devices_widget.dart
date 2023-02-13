@@ -240,7 +240,7 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                                   [])
                                               .contains(getJsonField(
                                                 devicesGridItem,
-                                                r'''$.name''',
+                                                r'''$.id''',
                                               ))
                                               .toString(),
                                           style: FlutterFlowTheme.of(context)
