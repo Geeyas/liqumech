@@ -86,186 +86,177 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                 height: 100000,
                 fit: BoxFit.fill,
               ),
-              FutureBuilder<ApiCallResponse>(
-                future:
-                    (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
-                          ..complete(ArduinoIoTCloudGroup.callDevicesCall.call(
-                            authToken: FFAppState().MyUserToken,
-                          )))
-                        .future,
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: Color(0xFFD62E32),
-                        ),
-                      ),
-                    );
-                  }
-                  final gridViewCallDevicesResponse = snapshot.data!;
-                  return Builder(
-                    builder: (context) {
-                      final devicesGrid = getJsonField(
-                        gridViewCallDevicesResponse.jsonBody,
-                        r'''$[:].thing.properties[:]''',
-                      ).toList();
-                      return RefreshIndicator(
-                        onRefresh: () async {
-                          setState(() => _model.apiRequestCompleter = null);
-                          await _model.waitForApiRequestCompleter();
-                        },
-                        child: GridView.builder(
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 1,
+              AuthUserStreamWidget(
+                builder: (context) => FutureBuilder<ApiCallResponse>(
+                  future: (_model
+                          .apiRequestCompleter ??= Completer<ApiCallResponse>()
+                        ..complete(ArduinoIoTCloudGroup.callDevicesCall.call(
+                          authToken: FFAppState().MyUserToken,
+                          deviceIdList: (currentUserDocument?.clientProperties
+                                  ?.toList() ??
+                              []),
+                        )))
+                      .future,
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFD62E32),
                           ),
-                          scrollDirection: Axis.vertical,
-                          itemCount: devicesGrid.length,
-                          itemBuilder: (context, devicesGridIndex) {
-                            final devicesGridItem =
-                                devicesGrid[devicesGridIndex];
-                            return Visibility(
-                              visible: (currentUserDocument?.clientProperties
-                                          ?.toList() ??
-                                      [])
-                                  .contains(getJsonField(
-                                devicesGridItem,
-                                r'''$.id''',
-                              )),
-                              child: Padding(
+                        ),
+                      );
+                    }
+                    final gridViewCallDevicesResponse = snapshot.data!;
+                    return Builder(
+                      builder: (context) {
+                        final devicesGrid = getJsonField(
+                          gridViewCallDevicesResponse.jsonBody,
+                          r'''$[:].thing.properties[:]''',
+                        ).toList();
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            setState(() => _model.apiRequestCompleter = null);
+                            await _model.waitForApiRequestCompleter();
+                          },
+                          child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 1,
+                            ),
+                            scrollDirection: Axis.vertical,
+                            itemCount: devicesGrid.length,
+                            itemBuilder: (context, devicesGridIndex) {
+                              final devicesGridItem =
+                                  devicesGrid[devicesGridIndex];
+                              return Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                                child: AuthUserStreamWidget(
-                                  builder: (context) => InkWell(
-                                    onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().MyWidgetName =
-                                            getJsonField(
-                                          devicesGridItem,
-                                          r'''$.name''',
-                                        ).toString();
-                                        FFAppState().MyWidgetID = getJsonField(
-                                          devicesGridItem,
-                                          r'''$.id''',
-                                        ).toString();
-                                        FFAppState().MyWidgetType =
-                                            getJsonField(
-                                          devicesGridItem,
-                                          r'''$.type''',
-                                        ).toString();
-                                        FFAppState().MyWidgetOldValue =
-                                            getJsonField(
-                                          devicesGridItem,
-                                          r'''$.last_value''',
-                                        ).toString();
-                                      });
-                                      if (FFAppState().MyWidgetType ==
-                                          'STATUS') {
-                                        context.pushNamed('IsStatusDevice');
+                                child: InkWell(
+                                  onTap: () async {
+                                    FFAppState().update(() {
+                                      FFAppState().MyWidgetName = getJsonField(
+                                        devicesGridItem,
+                                        r'''$.name''',
+                                      ).toString();
+                                      FFAppState().MyWidgetID = getJsonField(
+                                        devicesGridItem,
+                                        r'''$.id''',
+                                      ).toString();
+                                      FFAppState().MyWidgetType = getJsonField(
+                                        devicesGridItem,
+                                        r'''$.type''',
+                                      ).toString();
+                                      FFAppState().MyWidgetOldValue =
+                                          getJsonField(
+                                        devicesGridItem,
+                                        r'''$.last_value''',
+                                      ).toString();
+                                    });
+                                    if (FFAppState().MyWidgetType == 'STATUS') {
+                                      context.pushNamed('IsStatusDevice');
 
-                                        if (FFAppState().MyWidgetOldValue ==
-                                            'true') {
-                                          FFAppState().update(() {
-                                            FFAppState().MyWidgetStatus = true;
-                                          });
-                                        } else {
-                                          FFAppState().update(() {
-                                            FFAppState().MyWidgetStatus = false;
-                                          });
-                                        }
+                                      if (FFAppState().MyWidgetOldValue ==
+                                          'true') {
+                                        FFAppState().update(() {
+                                          FFAppState().MyWidgetStatus = true;
+                                        });
                                       } else {
-                                        context.pushNamed('NonStatusDevice');
+                                        FFAppState().update(() {
+                                          FFAppState().MyWidgetStatus = false;
+                                        });
                                       }
-                                    },
-                                    child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 5,
-                                            color: Color(0x33000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              if ((getJsonField(
-                                                        devicesGridItem,
-                                                        r'''$.type''',
-                                                      ) ==
-                                                      'status') ||
-                                                  (getJsonField(
-                                                        devicesGridItem,
-                                                        r'''$.type''',
-                                                      ) ==
-                                                      'STATUS'))
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(16, 16, 16, 16),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.toggleOff,
-                                                    color: Colors.black,
-                                                    size: 70,
-                                                  ),
+                                    } else {
+                                      context.pushNamed('NonStatusDevice');
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 5,
+                                          color: Color(0x33000000),
+                                          offset: Offset(0, 2),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            if ((getJsonField(
+                                                      devicesGridItem,
+                                                      r'''$.type''',
+                                                    ) ==
+                                                    'status') ||
+                                                (getJsonField(
+                                                      devicesGridItem,
+                                                      r'''$.type''',
+                                                    ) ==
+                                                    'STATUS'))
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(16, 16, 16, 16),
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.toggleOff,
+                                                  color: Colors.black,
+                                                  size: 70,
                                                 ),
-                                              if (!((getJsonField(
-                                                        devicesGridItem,
-                                                        r'''$.type''',
-                                                      ) ==
-                                                      'status') ||
-                                                  (getJsonField(
-                                                        devicesGridItem,
-                                                        r'''$.type''',
-                                                      ) ==
-                                                      'STATUS')))
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(16, 16, 16, 16),
-                                                  child: Icon(
-                                                    Icons.edit_outlined,
-                                                    color: Colors.black,
-                                                    size: 70,
-                                                  ),
+                                              ),
+                                            if (!((getJsonField(
+                                                      devicesGridItem,
+                                                      r'''$.type''',
+                                                    ) ==
+                                                    'status') ||
+                                                (getJsonField(
+                                                      devicesGridItem,
+                                                      r'''$.type''',
+                                                    ) ==
+                                                    'STATUS')))
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(16, 16, 16, 16),
+                                                child: Icon(
+                                                  Icons.edit_outlined,
+                                                  color: Colors.black,
+                                                  size: 70,
                                                 ),
-                                            ],
-                                          ),
-                                          Text(
-                                            getJsonField(
-                                              devicesGridItem,
-                                              r'''$.name''',
-                                            ).toString(),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
-                                          ),
-                                        ],
-                                      ),
+                                              ),
+                                          ],
+                                        ),
+                                        Text(
+                                          getJsonField(
+                                            devicesGridItem,
+                                            r'''$.name''',
+                                          ).toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
