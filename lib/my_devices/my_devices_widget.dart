@@ -156,7 +156,7 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                     ).toString();
                                   });
                                   if (FFAppState().MyWidgetType == 'STATUS') {
-                                    context.pushNamed('IsStatus');
+                                    context.pushNamed('IsStatusDevice');
 
                                     if (FFAppState().MyWidgetOldValue ==
                                         'true') {
@@ -169,7 +169,7 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                       });
                                     }
                                   } else {
-                                    context.pushNamed('NonStatus');
+                                    context.pushNamed('NonStatusDevice');
                                   }
                                 },
                                 child: Container(
