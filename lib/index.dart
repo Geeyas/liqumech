@@ -14,3 +14,7 @@ export 'non_status/non_status_widget.dart' show NonStatusWidget;
 export 'double_test/double_test_widget.dart' show DoubleTestWidget;
 export 'my_devices/my_devices_widget.dart' show MyDevicesWidget;
 export 'test_page/test_page_widget.dart' show TestPageWidget;
+export 'is_status_device/is_status_device_widget.dart'
+    show IsStatusDeviceWidget;
+export 'non_status_device/non_status_device_widget.dart'
+    show NonStatusDeviceWidget;
