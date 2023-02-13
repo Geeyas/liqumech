@@ -163,7 +163,7 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                     Text(
                                       getJsonField(
                                         devicesGridItem,
-                                        r'''$[:].thing.properties[:].name''',
+                                        r'''$.name''',
                                       ).toString(),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
