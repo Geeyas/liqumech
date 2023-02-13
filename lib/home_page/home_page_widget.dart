@@ -300,7 +300,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ).toString();
                                 });
 
-                                context.pushNamed('myDevices');
+                                context.pushNamed('testPage');
                               } else {
                                 context.pushNamed('NoThings');
                               }
