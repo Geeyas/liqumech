@@ -109,7 +109,7 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                     builder: (context) {
                       final devicesGrid = getJsonField(
                         gridViewCallDevicesResponse.jsonBody,
-                        r'''$[:]''',
+                        r'''$[:].thing.properties[:]''',
                       ).toList();
                       return RefreshIndicator(
                         onRefresh: () async {
