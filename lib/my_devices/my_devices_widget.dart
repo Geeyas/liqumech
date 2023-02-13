@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -232,13 +233,19 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                             ),
                                         ],
                                       ),
-                                      Text(
-                                        getJsonField(
-                                          devicesGridItem,
-                                          r'''$.name''',
-                                        ).toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
+                                      AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          (currentUserDocument?.clientProperties
+                                                      ?.toList() ??
+                                                  [])
+                                              .contains(getJsonField(
+                                                devicesGridItem,
+                                                r'''$.name''',
+                                              ))
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
                                       ),
                                     ],
                                   ),
