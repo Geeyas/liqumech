@@ -36,6 +36,8 @@ class FFAppState extends ChangeNotifier {
     _MyClientSecret =
         await secureStorage.getString('ff_MyClientSecret') ?? _MyClientSecret;
     _MySimValue = await secureStorage.getDouble('ff_MySimValue') ?? _MySimValue;
+    _MyDevices =
+        await secureStorage.getStringList('ff_MyDevices') ?? _MyDevices;
   }
 
   void update(VoidCallback callback) {
@@ -175,6 +177,32 @@ class FFAppState extends ChangeNotifier {
 
   void deleteMySimValue() {
     secureStorage.delete(key: 'ff_MySimValue');
+  }
+
+  List<String> _MyDevices = [];
+  List<String> get MyDevices => _MyDevices;
+  set MyDevices(List<String> _value) {
+    _MyDevices = _value;
+    secureStorage.setStringList('ff_MyDevices', _value);
+  }
+
+  void deleteMyDevices() {
+    secureStorage.delete(key: 'ff_MyDevices');
+  }
+
+  void addToMyDevices(String _value) {
+    _MyDevices.add(_value);
+    secureStorage.setStringList('ff_MyDevices', _MyDevices);
+  }
+
+  void removeFromMyDevices(String _value) {
+    _MyDevices.remove(_value);
+    secureStorage.setStringList('ff_MyDevices', _MyDevices);
+  }
+
+  void removeAtIndexFromMyDevices(int _index) {
+    _MyDevices.removeAt(_index);
+    secureStorage.setStringList('ff_MyDevices', _MyDevices);
   }
 }
 

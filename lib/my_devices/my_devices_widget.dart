@@ -233,20 +233,23 @@ class _MyDevicesWidgetState extends State<MyDevicesWidget> {
                                             ),
                                         ],
                                       ),
-                                      AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          (currentUserDocument?.clientProperties
-                                                      ?.toList() ??
-                                                  [])
-                                              .contains(getJsonField(
-                                                devicesGridItem,
-                                                r'''$.id''',
-                                              ))
-                                              .toString(),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                      if ((currentUserDocument?.clientProperties
+                                                  ?.toList() ??
+                                              [])
+                                          .contains(getJsonField(
+                                        devicesGridItem,
+                                        r'''$.id''',
+                                      )))
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            getJsonField(
+                                              devicesGridItem,
+                                              r'''$.name''',
+                                            ).toString(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),
